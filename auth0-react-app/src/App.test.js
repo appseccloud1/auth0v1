@@ -334,6 +334,35 @@ test("demonstrates a user permission followed by a backend Management API read",
   );
 });
 
+test("explains the request path and when the backend uses M2M", async () => {
+  useAuth0.mockReturnValue({
+    ...defaultAuth,
+    isAuthenticated: true,
+    user: { name: "Alex Example" },
+  });
+  global.fetch.mockImplementation((url) => {
+    if (url.endsWith("/api/admin/access")) {
+      return Promise.resolve(jsonResponse({ message: "Insufficient permission" }, 403));
+    }
+    return Promise.resolve(jsonResponse(profile));
+  });
+
+  render(<App />);
+
+  expect(
+    screen.getByRole("heading", { name: "User permission → backend M2M → Auth0" })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByRole("heading", { name: "Sends the user's token" })
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(/These routes do not call the Auth0 Management API or use an M2M token/)
+  ).toBeInTheDocument();
+  expect(
+    screen.getByText(/the user's custom API permission and the backend app's separate Management API scope/)
+  ).toBeInTheDocument();
+});
+
 test("explains when the API responds with HTML instead of JSON", async () => {
   useAuth0.mockReturnValue({
     ...defaultAuth,

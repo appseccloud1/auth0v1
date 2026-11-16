@@ -573,11 +573,90 @@ button {
   margin: 18px 0 0;
 }
 
-.demo-flow {
+.request-flow-steps {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 22px 0 18px;
+  padding: 0;
+}
+
+.request-flow-step {
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  min-width: 0;
+  padding: 16px;
+  position: relative;
+}
+
+.request-flow-step:not(:last-child)::after {
+  color: var(--color-primary);
+  content: "→";
+  font-size: 20px;
+  font-weight: 700;
+  position: absolute;
+  right: -14px;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: 1;
+}
+
+.request-flow-number {
+  align-items: center;
+  background: #e5f0f7;
+  border-radius: 50%;
+  color: var(--color-primary);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 800;
+  height: 28px;
+  justify-content: center;
+  margin-bottom: 12px;
+  width: 28px;
+}
+
+.request-flow-step h3,
+.request-flow-route h3 {
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+
+.request-flow-step p:not(.eyebrow),
+.request-flow-route p:not(.eyebrow) {
   color: var(--color-muted);
-  line-height: 1.7;
-  margin: 20px 0;
-  padding-left: 22px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.request-flow-routes {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.request-flow-route {
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 10px;
+  min-width: 0;
+  padding: 16px;
+}
+
+.request-flow-route.route-management {
+  border-left-color: #8a64a8;
+}
+
+.request-flow-return {
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 16px 0 0;
 }
 
 .demo-flow-table-wrap {
@@ -771,6 +850,24 @@ button {
 
   .demo-check-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .request-flow-steps,
+  .request-flow-routes {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .request-flow-steps {
+    gap: 28px;
+  }
+
+  .request-flow-step:not(:last-child)::after {
+    content: "↓";
+    left: 20px;
+    right: auto;
+    top: auto;
+    transform: none;
+    bottom: -24px;
   }
 
   .user-card-heading {

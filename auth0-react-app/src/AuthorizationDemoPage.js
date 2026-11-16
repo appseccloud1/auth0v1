@@ -236,19 +236,69 @@ function AuthorizationDemoPage({ apiRequest }) {
             <h2>User permission → backend M2M → Auth0</h2>
           </div>
         </div>
-        <ol className="demo-flow">
-          <li>The browser sends the user&apos;s access token to this API.</li>
-          <li>The API checks the route&apos;s user permission and resource boundary.</li>
-          <li>
-            Only after that succeeds, the backend obtains or reuses an M2M
-            token with the Management API scope needed for the operation.
+        <ol className="request-flow-steps">
+          <li className="request-flow-step">
+            <span className="request-flow-number">1</span>
+            <p className="eyebrow">Frontend page</p>
+            <h3>User starts an action</h3>
+            <p>
+              The user clicks a protected API, profile, or organization
+              feature.
+            </p>
           </li>
-          <li>The backend calls Auth0 and returns the permitted result.</li>
+          <li className="request-flow-step">
+            <span className="request-flow-number">2</span>
+            <p className="eyebrow">React in the browser</p>
+            <h3>Sends the user&apos;s token</h3>
+            <p>
+              React gets an access token for this API and sends it to the
+              backend as a Bearer token.
+            </p>
+          </li>
+          <li className="request-flow-step">
+            <span className="request-flow-number">3</span>
+            <p className="eyebrow">Express backend</p>
+            <h3>Checks access first</h3>
+            <p>
+              The API validates the token and required user permission. Routes
+              that need it also check the Organization boundary.
+            </p>
+          </li>
         </ol>
+        <div className="request-flow-routes">
+          <article className="request-flow-route route-demo">
+            <p className="eyebrow">Path A · Sample API data</p>
+            <h3>
+              <code>/api/protected</code> and <code>/api/admin</code>
+            </h3>
+            <p>
+              After the user-permission check, the backend returns its demo
+              data. These routes do not call the Auth0 Management API or use an
+              M2M token.
+            </p>
+          </article>
+          <article className="request-flow-route route-management">
+            <p className="eyebrow">Path B · Auth0 user directory</p>
+            <h3>
+              <code>/api/profile</code> and <code>/api/users</code>
+            </h3>
+            <p>
+              Only after the user-permission check succeeds, the backend gets
+              or reuses a separate M2M token with the required Management API
+              scope, then calls Auth0.
+            </p>
+          </article>
+        </div>
+        <p className="request-flow-return">
+          Auth0 returns data to the backend, which sends the permitted result
+          back to the page. The M2M token and client secret never go to the
+          browser.
+        </p>
         <p className="demo-footnote">
-          The M2M token and client secret stay on the backend; they are never
-          returned to the browser. Both the user permission and the backend
-          Management API grant must allow an operation.
+          Both checks are required for directory routes: the user&apos;s custom
+          API permission and the backend app&apos;s separate Management API
+          scope. For example, <code>read:users</code> can appear in both places
+          but authorizes different requests.
         </p>
         <div className="demo-check-grid">
           {managementChecks.map((check) => (
