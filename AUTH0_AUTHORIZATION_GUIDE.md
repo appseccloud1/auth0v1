@@ -313,7 +313,7 @@ The root `.gitignore` excludes `.env` files, dependencies, generated builds, and
 
 ```powershell
 git status --short
-git check-ignore auth0-react-app/.env auth0-node-backend/.env
+git check-ignore auth0-react-app\.env auth0-node-backend\.env
 ```
 
 Commit and push the source to the GitHub repository, then import that repository into Vercel.
