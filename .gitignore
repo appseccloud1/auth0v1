@@ -1,0 +1,16 @@
+# Never commit tenant settings, credentials, or local overrides.
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies, generated builds, and local deployment metadata.
+**/node_modules/
+**/build/
+**/coverage/
+**/.vercel/
+.vercel/
+
+# Local logs and operating-system files.
+*.log
+.DS_Store
+Thumbs.db
